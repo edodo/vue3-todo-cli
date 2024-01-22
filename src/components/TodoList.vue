@@ -1,7 +1,7 @@
 <template>
     <div>
         <ul>
-            <li v-for="(todo,index) in todoItems" v-bind:key="index" class="shadow">
+            <li v-for="(todo,index) in props.todoArray" v-bind:key="index" class="shadow">
                 <i class="fas fa-check checkBtn" :class="{checkBtnCompleted: todo.completed}"
                 @click="toggleComplete(todo)"></i>
                 <span :class="{textCompleted: todo.completed }">{{todo.item}}</span>
@@ -15,19 +15,11 @@
 </template>
 
 <script setup>
-import { ref, onBeforeMount } from 'vue'
+import { ref } from 'vue'
 
 const todoItems = ref([])
 
-onBeforeMount(() => {
-    if(localStorage.length > 0){
-        for(var i=0; i < localStorage.length; i++) {
-            const itemJson = localStorage.getItem(localStorage.key(i));
-            todoItems.value.push(JSON.parse(itemJson));
-        }
-    }
-    console.log(todoItems.value)
-})
+const props = defineProps(['todoArray'])
 
 const removeTodo = (todoItem, index) => {
     localStorage.removeItem(todoItem)
@@ -43,10 +35,10 @@ const toggleComplete = (todoItem) => {
 
 <style scoped>
 ul {
-list-style-type: none;
-padding-left: 0px;
-margin-top: 0;
-text-align: left;
+    list-style-type: none;
+    padding-left: 0px;
+    margin-top: 0;
+    text-align: left;
 }
 li {
 display: flex;

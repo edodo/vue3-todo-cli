@@ -1,0 +1,144 @@
+https://2022.stateofjs.com/ko-KR/libraries/front-end-frameworks/
+https://2022.stateofjs.com/ko-KR/libraries/build-tools/
+
+html)
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>JS Bin</title>
+</head>
+<body>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.7.14/dist/vue.js"></script>
+  
+<div id="app">
+<h1>Hello, {{ name }}</h1>
+  <h1>Hello, v-text : <span v-text="name"> vuejs3버전</span></h1>
+  <h1>Hello, v-html : <span v-html="hname"> vuejs3버전</span></h1>
+  <h1>Hello, v-html : <span v-show="flag" v-html="hname"> vuejs3버전</span></h1>
+  <h1>Hello, v-html : <span v-show="value===0" v-html="hname"> vuejs3버전</span></h1>
+  <h1>Hello, v-if : <span v-if="value > 5" v-html="hname"> vuejs3버전</span></h1>
+  <h1>Hello, v-else-if : <span v-else-if="value === 5" v-html="hname"> vuejs3버전</span></h1>
+  <img v-bind:src="vuelogo" width="100"/>
+  
+  <img :src="flag? anglogo:vuelogo" width="100"/>
+  <ul>
+    <li v-for="(todo,idx) in todos" :key="idx">
+      {{idx}}    {{todo.text}}
+    </li>
+  </ul>
+  <input type="checkbox" v-model="flag"/>
+  <input type="text" v-model="name"/>
+  <h2>value = {{value}}</h2>
+  <button @click="increment">증가</button>
+  <button @click="decrement">감소</button><br/>
+</div>
+
+
+</body>
+</html>
+
+js)
+// 새로운 뷰를 정의합니다
+var app = new Vue({
+  el: '#app', // 어떤 엘리먼트에 적용을 할 지 정합니다
+  // data 는 해당 뷰에서 사용할 정보를 지닙니다
+  data: {
+    name: 'Vue',
+    hname: '<i>html name</i>',
+    flag: true,
+    value: 5,
+    vuelogo: "https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_92x30dp.png",
+    anglogo: "https://angular.io/assets/images/logos/angular/logo-nav@2x.png",
+    todos: [
+      {text:'Vue.js 튜토리얼 작성하기'},
+      {text:'Webpack 알아보기'},
+      {text:'사이드 프로젝트 진행하기'},
+    ],
+  } ,
+  methods: {
+    increment() {
+      this.value++;
+    },
+    decrement() {
+      this.value--;
+    }
+  }
+});
+app.value=7;
+
+
+[프로젝트 생성]
+npm create vite@latest
+-> vite 으로 설치 (내부적으로 Rollup이 들어 있음), vite 베이스 프로젝트
+vue create vue3-todo
+-> vue-cli 로 설치 (vue-cli 내부적으로 webpack, babel이 들어 있음), vue-cli로 프로젝트 생성
+
+v-text
+v-html
+v-if
+v-else-if
+v-bind
+v-for
+v-on
+v-bind
+v-model
+
+[vue-cli 프로젝트 분석]
+vue create vue3-todo-cli
+
+npm run serve
+public/index.html 파일이 실행된 것임
+src/main.js src/App.vue
+
+src/main.js 에 import { createApp } from 'vue' 이부분 오류 발생시
+"requireConfigFile": false 추가
+=>
+    "parserOptions": {
+      "parser": "@babel/eslint-parser",
+      "requireConfigFile": false
+    },
+
+/src/index.js와 src/main.js 를 연결하는건 내부에서 webpack의 entry에 설정되어 있음
+
+bundling)
+ <script defer src="/js/chunk-vendors.js"></script>
+ => node_modules를 번들하는 js
+ <script defer src="/js/app.js"></script></head>
+ => src/main.js src/App.vue public/index.html 파일을 번들링
+ src/main.js => index.html => main.js => App.vue
+ 
+[vite 프로젝트 분석]
+https://blog.logrocket.com/reactivity-vue-3-composition-api-ref-reactive/
+
+1) vite 사용
+$npm create vite@latest
+
+2) vite 기반으로 create-vue
+$npm create vue@latest
+
+2번 create-vue로 생성
+ESLint와 Prettier만 Yes
+
+3) npm install
+cd vue3-first-vite
+npm i 
+
+4) 실행
+npm run dev
+
+cli로 생성하면 개발모드에서도 소스를 번들링하고
+vite로 생성하면 컴파일 전에는 소스버전을 보여준다.
+
+
+
+todo app cli 생성)
+components 디렉토리에 다음 파일들을 생성하세요:
+: src/components/TodoHeader.vue
+: src/components/TodoInput.vue
+: src/components/TodoList.vue
+: src/components/TodoFooter.vue
+
+아래 추가해야 defineEmits를 import 하지 않아도 됨
+"vue/setup-compiler-macros": true

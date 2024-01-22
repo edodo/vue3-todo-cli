@@ -1,9 +1,12 @@
 <template>
     <div>
         <ul>
-            <li v-for="(item,index) in todoItems" v-bind:key="index">
-                {{item}}
-                <span class="removeBtn" @click="removeTodo(item, index)">
+            <li v-for="(todo,index) in todoItems" v-bind:key="index" class="shadow">
+                <i class="fas fa-check checkBtn" :class="{checkBtnCompleted: todo.completed}"
+                @click="toggleComplete(todo)"></i>
+                <span :class="{textCompleted: todo.completed }">{{todo.item}}</span>
+
+                <span class="removeBtn" @click="removeTodo(todo.item, index)">
                     <i class="fas fa-trash-alt"></i>
                 </span>
             </li>
@@ -19,7 +22,8 @@ const todoItems = ref([])
 onBeforeMount(() => {
     if(localStorage.length > 0){
         for(var i=0; i < localStorage.length; i++) {
-            todoItems.value.push(localStorage.key(i))
+            const itemJson = localStorage.getItem(localStorage.key(i));
+            todoItems.value.push(JSON.parse(itemJson));
         }
     }
     console.log(todoItems.value)
@@ -29,7 +33,12 @@ const removeTodo = (todoItem, index) => {
     localStorage.removeItem(todoItem)
     todoItems.value.splice(index, 1)
 }
-
+const toggleComplete = (todoItem) => {
+    const { item, completed } = todoItem
+    todoItem.completed = !completed;
+    localStorage.removeItem(item);
+    localStorage.setItem(item, JSON.stringify(todoItem));
+}
 </script>
 
 <style scoped>

@@ -2,8 +2,9 @@
   <div id="app">
     <TodoHeader></TodoHeader>
     <TodoInput @add:todo="addTodo"></TodoInput>
-    <TodoList :todo-array="todoItems"></TodoList>
-    <TodoFooter></TodoFooter>
+    <TodoList :todo-array="todoItems" 
+    @remove:todo="removeTodo" @toggle:todo="toggleTodo"></TodoList>
+    <TodoFooter @clear:todo="clearTodo"></TodoFooter>
   </div>
 </template>
 
@@ -32,14 +33,30 @@ export default {
         } //for
       } //if
     });
-    
+
     const addTodo = (todoItemStr) => {
       const todoItemObj = { completed: false, item: todoItemStr };
       localStorage.setItem(todoItemStr, JSON.stringify(todoItemObj));
       todoItems.push(todoItemObj);
     };//addTodo
 
-    return { todoItems, addTodo };
+    const removeTodo = (todoItemStr, index) => {
+      localStorage.removeItem(todoItemStr);
+      todoItems.splice(index, 1);
+    };
+
+    const toggleTodo = (todoItem, index) => {
+      const { item, completed } = todoItem
+      todoItems[index].completed = !completed
+      localStorage.removeItem(item)
+      localStorage.setItem(item, JSON.stringify(todoItems[index]))
+    }
+
+    const clearTodo = () => {
+      localStorage.clear()
+      todoItems.splice(0)
+    } 
+    return { todoItems, addTodo, removeTodo, toggleTodo, clearTodo };
   }, //setup
 
 }

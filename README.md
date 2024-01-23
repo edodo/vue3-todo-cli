@@ -1,3 +1,18 @@
+• Visual Studio Code Plug In 설치하기
+1. Vue Language Features ( Volar )
+https://marketplace.visualstudio.com/items?itemName=Vue.volar
+2. Vue Snippets
+https://marketplace.visualstudio.com/items?itemName=sdras.vue-vscode-snippets
+3. ESLint
+https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint
+4. VSCode Material Icon Theme
+https://marketplace.visualstudio.com/items?itemName=PKief.material-icon-theme
+5. Thunder Client
+https://marketplace.visualstudio.com/items?itemName=rangav.vscode-thunder-client
+6. Auto Close Tag
+https://marketplace.visualstudio.com/items?itemName=formulahendry.auto-close-tag
+
+
 # vue3-todo-cli
 
 ## Project setup
@@ -22,3 +37,6 @@ npm run lint
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
+
+
+http://localhost:8080/

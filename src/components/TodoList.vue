@@ -17,19 +17,19 @@
 import { useStore } from "vuex"
 import { computed, onMounted } from "vue"
 const store = useStore()
-const todoItems = computed(() => store.state.todoItems)
+const todoItems = computed(() => store.state.moduleTodo.todoItems)
 
 const removeTodo = (todoItem) => {
     //store.commit("removeTodo", {todoItem, index})
-    store.dispatch("removeTodo", todoItem)
+    store.dispatch("moduleTodo/removeTodo", todoItem)
 }
 
 const toggleComplete = (todoItem) => {
-    store.dispatch("toggleTodo", todoItem)
+    store.dispatch("moduleTodo/toggleTodo", todoItem)
 }
 
 onMounted(() => {
-    store.dispatch("loadTodoItems")
+    store.dispatch("moduleTodo/loadTodoItems")
 })
 
 </script>

@@ -40,3 +40,10 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 
 
 http://localhost:8080/
+
+# vue Router 설치
+1. Vue Router 설치하기
+``` npm install vue-router ```
+
+2. Vue Router 코드 자동 생성
+``` vue add router ```
